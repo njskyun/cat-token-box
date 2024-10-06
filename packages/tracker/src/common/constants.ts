@@ -45,8 +45,8 @@ export class Constants {
     this.TRANSFER_GUARD_AMOUNT_OFFSET + this.CONTRACT_OUTPUT_MAX_COUNT;
 
   static readonly QUERY_PAGING_DEFAULT_OFFSET = 0;
-  static readonly QUERY_PAGING_DEFAULT_LIMIT = 100;
-  static readonly QUERY_PAGING_MAX_LIMIT = 500;
+  static readonly QUERY_PAGING_DEFAULT_LIMIT = 5000;
+  static readonly QUERY_PAGING_MAX_LIMIT = 5555;
 }
 
 const _network = process.env.NETWORK || 'mainnet';
