@@ -212,7 +212,7 @@ export class MintCommand extends BoardcastCommand {
             }
 
             console.log(
-              `Minting ${unScaleByDecimals(amount, token.info.decimals)} ${token.info.symbol} tokens in txid: ${mintTxIdOrErr} ...`,
+              `成功 ----- Minting ${unScaleByDecimals(amount, token.info.decimals)} ${token.info.symbol} tokens in txid: ${mintTxIdOrErr} ...`,
             );
             continue;
           } else {
