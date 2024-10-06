@@ -101,7 +101,7 @@ export class MintCommand extends BoardcastCommand {
 
             feeUtxos[0] = UtxosArr[0];
             UtxosArr.splice(0, 1);
-            console.warn('使用的UTXO : 金额 --- ', feeUtxos[0].txId, ' : ', feeUtxos[0].satoshis); 
+            console.warn('使用的UTXO : 金额 ------------ ', feeUtxos[0].txId, ' : ', feeUtxos[0].satoshis); 
           } else {
             feeUtxos[0] = UtxosArr[0];
             UtxosArr.splice(0, 1);
@@ -110,14 +110,12 @@ export class MintCommand extends BoardcastCommand {
  
           // 每 10 次打印一次当前的索引
           if (index % 30 == 0) {
-            count = await getTokenMinterCount( 
+            count = await getTokenMinterCount(  
               this.configService,
               token.tokenId,
             );
           }
-          
-          
-          console.warn('count : ',  count);
+        
 
           const maxTry = count < MAX_RETRY_COUNT ? count : MAX_RETRY_COUNT;
 
