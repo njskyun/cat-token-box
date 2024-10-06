@@ -91,17 +91,23 @@ export class MintCommand extends BoardcastCommand {
           // await this.merge(token, address);
           let feeUtxos = [];
 
-          if (UtxosArr.length === 0) { 
-            UtxosArr = await this.getFeeUTXOs(address);
+          if (UtxosArr.length == 0) { 
+            UtxosArr = await this.getFeeUTXOs(address); 
+ 
             if (UtxosArr.length === 0) {
-              console.warn('Insufficient satoshis balance!');
-              continue;
+              console.warn('余额不足!');
+              continue; 
             }
 
             feeUtxos[0] = UtxosArr[0];
  
             console.warn('使用的UTXO : 金额 : ', feeUtxos[0].txId, feeUtxos[0].satoshis);
             UtxosArr.splice(0, 1);
+          } else {
+            let feeUtxos = [];
+            feeUtxos[0] = UtxosArr[0];
+            UtxosArr.splice(0, 1);
+            console.warn('使用的UTXO : 金额 : ', feeUtxos[0].txId, feeUtxos[0].satoshis);
           }
  
           // 每 10 次打印一次当前的索引
