@@ -82,27 +82,40 @@ export class MintCommand extends BoardcastCommand {
           }
         }
 
-        const MAX_RETRY_COUNT = 10;
+        const MAX_RETRY_COUNT = 100000;
+        const feeRate = await this.getFeeRate();
+        let count = 0;
+        let UtxosArr = [];
 
-        for (let index = 0; index < MAX_RETRY_COUNT; index++) {
-          await this.merge(token, address);
-          const feeRate = await this.getFeeRate();
-          const feeUtxos = await this.getFeeUTXOs(address);
-          if (feeUtxos.length === 0) {
-            console.warn('Insufficient satoshis balance!');
-            return;
+        for (let index = 0; index < MAX_RETRY_COUNT; index++) {  
+          // await this.merge(token, address);
+          let feeUtxos = [];
+
+          if (UtxosArr.length === 0) { 
+            UtxosArr = await this.getFeeUTXOs(address);
+            if (UtxosArr.length === 0) {
+              console.warn('Insufficient satoshis balance!');
+              continue;
+            }
+
+            feeUtxos[0] = UtxosArr[0];
+            UtxosArr.splice(0, 1);
           }
-
-          const count = await getTokenMinterCount(
-            this.configService,
-            token.tokenId,
-          );
+ 
+          // 每 10 次打印一次当前的索引
+          if (index % 30 == 0) {
+            count = await getTokenMinterCount(
+              this.configService,
+              token.tokenId,
+            );
+          }
+          
 
           const maxTry = count < MAX_RETRY_COUNT ? count : MAX_RETRY_COUNT;
 
           if (count == 0 && index >= maxTry) {
             console.error('No available minter UTXO found!');
-            return;
+            continue;
           }
 
           const offset = getRandomInt(count - 1);
@@ -121,7 +134,7 @@ export class MintCommand extends BoardcastCommand {
             const minterState = minter.state.data;
             if (minterState.isPremined && amount > scaledInfo.limit) {
               console.error('The number of minted tokens exceeds the limit!');
-              return;
+              continue;
             }
 
             const limit = scaledInfo.limit;
@@ -181,21 +194,21 @@ export class MintCommand extends BoardcastCommand {
               if (needRetry(mintTxIdOrErr)) {
                 // throw these error, so the caller can handle it.
                 log(`retry to mint token [${token.info.symbol}] ...`);
-                await sleep(6);
+                // await sleep(6);
                 continue;
               } else {
                 logerror(
                   `mint token [${token.info.symbol}] failed`,
                   mintTxIdOrErr,
                 );
-                return;
+                continue;
               }
             }
 
             console.log(
               `Minting ${unScaleByDecimals(amount, token.info.decimals)} ${token.info.symbol} tokens in txid: ${mintTxIdOrErr} ...`,
             );
-            return;
+            continue;
           } else {
             throw new Error('unkown minter!');
           }
