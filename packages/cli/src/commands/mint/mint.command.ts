@@ -109,7 +109,7 @@ export class MintCommand extends BoardcastCommand {
           }
  
           // 每 10 次打印一次当前的索引
-          if (index % 100 == 0) {
+          if (index % 10 == 0) {
             count = await getTokenMinterCount(  
               this.configService,
               token.tokenId,
