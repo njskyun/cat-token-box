@@ -99,6 +99,8 @@ export class MintCommand extends BoardcastCommand {
             }
 
             feeUtxos[0] = UtxosArr[0];
+ 
+            console.warn('使用的UTXO : 金额 : ', feeUtxos[0].txId, feeUtxos[0].satoshis);
             UtxosArr.splice(0, 1);
           }
  
