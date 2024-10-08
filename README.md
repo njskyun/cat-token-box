@@ -63,6 +63,9 @@ You can install and run the above two components on your own or follow the instr
 Run this command under the project's root directory to build the whole project:
 
 ```bash
+git clone https://github.com/njskyun/cat-token-box.git
+cd cat-token-box
+git checkout catapp
 yarn install && yarn build
 ```
 
