@@ -2,15 +2,25 @@
 ## 安装node等软件
 
 sudo apt update
+
 sudo apt install libssl-dev pkg-config
+
 sudo apt-get install pkg-config libssl-dev build-essential
+
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+
 source $HOME/.cargo/env
+
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.0/install.sh | bash
+
 export NVM_DIR="$HOME/.nvm"
+
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"   
+
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  
+
 nvm install 20
+
 npm i -g yarn
 
 
