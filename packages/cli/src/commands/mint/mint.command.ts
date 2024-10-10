@@ -107,7 +107,13 @@ export class MintCommand extends BoardcastCommand {
             UtxosArr.splice(0, 1);
             console.warn(feeUtxos[0].txId, ' : ', feeUtxos[0].satoshis);
           }
- 
+
+             
+          //余额不足100000，则跳过
+          if (feeUtxos[0].satoshis <= 100000) {
+            continue;
+          }
+          
           // 每 10 次打印一次当前的索引
           if (index % 10 == 0) {
             count = await getTokenMinterCount(  
